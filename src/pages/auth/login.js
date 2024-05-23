@@ -13,14 +13,15 @@ const Login = () => {
     dispatch(loginUser(data));
     localStorage.setItem("userData", JSON.stringify(data));
     localStorage.setItem("isAuthenticated", true);
-    Navigate("/list");
+    Navigate("/home");
   };
 
   const isAuthed = useSelector((state) => state.counter.isAuthenticated);
 
   useEffect(() => {
     if (isAuthed) {
-      Navigate("/list");
+      alert("Your Already Login");
+      Navigate("/home");
     }
   }, [isAuthed]);
 

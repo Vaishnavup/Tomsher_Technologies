@@ -1,9 +1,13 @@
 import React from "react";
 import { productJson } from "../../helper/product";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteProduct } from "../../helper/redux/store";
 
-const List = () => {
-  const data = productJson?.products; // prodcut json data
+const List = (props) => {
+  const dispatch = useDispatch();
+
+  const productList = props?.productList;
 
   const Navigate = useNavigate();
 
@@ -11,7 +15,11 @@ const List = () => {
     Navigate(`/list/${id}`);
   };
   const handleAdd = () => {
-    Navigate(`/listAdd`);
+    props?.selectPage("add");
+  };
+
+  const handleDeleteProduct = (productId) => {
+    dispatch(deleteProduct(productId));
   };
 
   return (
@@ -27,8 +35,8 @@ const List = () => {
           </tr>
         </thead>
         <tbody>
-          {data &&
-            data?.map((_a) => (
+          {productList &&
+            productList?.map((_a) => (
               <tr key={_a?.id}>
                 <td>{_a?.id || "___"}</td>
                 <td>{_a?.name || "___"}</td>
@@ -36,6 +44,9 @@ const List = () => {
                 <td>{_a?.category || "___"}</td>
                 <td>
                   <button onClick={() => handleView(_a?.id)}>view</button>
+                  <button onClick={() => handleDeleteProduct(_a?.id)}>
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}

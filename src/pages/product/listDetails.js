@@ -1,13 +1,12 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { productJson } from "../../helper/product";
+import { useSelector } from "react-redux";
 
 const ListDetails = () => {
   const { id } = useParams();
-  const data = productJson?.products; // prodcut json data
+  const data = useSelector((state) => state?.counter?.productList);
   const findOne = data?.find((_a) => _a?.id == id); // single Data
-
-  console.log(findOne);
 
   return (
     <>
@@ -18,7 +17,7 @@ const ListDetails = () => {
             <th>Name</th>
             <th>price</th>
             <th>category</th>
-          </tr> 
+          </tr>
         </thead>
         <tbody>
           {findOne && (

@@ -10,6 +10,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "./helper/redux/store";
 import Categories from "./pages/categories/categories";
 import CategoriesAdd from "./pages/categories/categoriesAdd";
+import Navigation from "./pages/Navigation";
+import CategoriesIndex from "./pages/categories/Index";
+import Logout from "./pages/auth/Logout";
 
 function App() {
   const dispatch = useDispatch();
@@ -26,13 +29,14 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/">
-          <Route path="login" element={<Login />} />
-          <Route path="categories" element={<Categories />} />
-          <Route path="categoriesAdd" element={<CategoriesAdd />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/home" element={<Navigation />} />
+          <Route path="/categories" element={<CategoriesIndex />} />
 
-          <Route path="list" element={<Index />} />
-          <Route path="list/:id" element={<ListDetails />} />
-          <Route path="listAdd" element={<Add />} />
+          <Route path="/list" element={<Index />} />
+          <Route path="/list/:id" element={<ListDetails />} />
+          
+          <Route path="/logout" element={<Logout />} />
           <Route path="*" element={<NoPage />} />
         </Route>
       </Routes>

@@ -21,10 +21,6 @@ export const addSchema = Yup.object().shape({
     .min(1, "Too Short!")
     .max(5, "Too Long!")
     .required("Required"),
-  category: Yup.string()
-    .min(2, "Too Short!")
-    .max(10, "Too Long!")
-    .required("Required"),
 });
 
 export const CategoriesAddSchema = Yup.object().shape({

@@ -2,8 +2,14 @@ import React from "react";
 import { addSchema } from "../../helper/validation";
 import { Formik, Form, Field } from "formik";
 import { productJson } from "../../helper/product";
+import { addProduct } from "../../helper/redux/store";
+import { useDispatch, useSelector } from "react-redux";
 
-const Add = () => {
+const Add = (props) => {
+  const dispatch = useDispatch();
+  const categoriesList = useSelector((state) => state?.counter?.categoriesList);
+  console.log(categoriesList);
+
   const initialValues = {
     id: "",
     name: "",
@@ -11,15 +17,16 @@ const Add = () => {
     category: "",
   };
 
-  const handleLogin = (value) => {
-    console.log(value);
-    const data = productJson?.products; // prodcut json data
+  const handleLogin = (data) => {
+    console.log(data);
     const newProduct = {
       id: data?.id,
       name: data?.name,
       price: data?.price,
       category: data?.category,
     };
+    dispatch(addProduct({ ...newProduct, id: props?.productList?.length + 1 }));
+    props?.selectPage("list");
   };
 
   return (
@@ -43,17 +50,23 @@ const Add = () => {
             {errors.price && touched.price ? <div>{errors.price}</div> : null}
             <br />
 
-            <Field name="category" type="text" placeholder="category" />
+            <Field as="select" name="category">
+              {categoriesList?.map((_a, i) => (
+                <option value={_a} key={i}>
+                  {_a}
+                </option>
+              ))}
+            </Field>
             {errors.category && touched.category ? (
               <div>{errors.category}</div>
             ) : null}
+
             <br />
 
             <button type="submit">Submit</button>
           </Form>
         )}
       </Formik>
-      ;
     </>
   );
 };
